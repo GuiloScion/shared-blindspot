@@ -1,5 +1,7 @@
 # Shared Blind Spots in Numerical Quadrature
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22557771.svg)](https://doi.org/10.5281/zenodo.22557771)
+
 Differential testing catches the mistakes that independent implementations make
 *independently*. It cannot catch the mistakes they make *together*.
 
@@ -97,6 +99,10 @@ so a positive result supports his own prior conclusion. The falsification
 conditions were fixed before measurement and the raw per-cell results are
 published in `results.csv` rather than summarised. AI assistance was used in this
 work.
+
+## Citing
+
+Archived at <https://doi.org/10.5281/zenodo.22557771>. See [`CITATION.cff`](CITATION.cff).
 
 ## Licence
 
