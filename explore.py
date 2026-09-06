@@ -58,11 +58,12 @@ def experiment_1_move_the_bump():
     off-centre. Here is the same effect in scipy: slide the bump across the
     interval at a fixed width and watch the verdict flip depending on nothing
     but position."""
-    WIDTH = 1e-3                       # <-- knob: how narrow the bump is
+    WIDTH = 1e-36                       # <-- knob: how narrow the bump is
     #      1e-3 straddles scipy's limit, so some centres pass and some
     #      do not. Set it to 1e-4 and every centre fails; 1e-2 and all pass.
-    CENTRES = [0.0, 0.1, 1/3, 0.5, 0.7071, 0.9]   # <-- knob: where it sits
+    CENTRES = [0.0, 0.1, 1/89, 0.9, 0.7071, 0.9]   # <-- knob: where it sits
 
+    seen = []
     print("\n=== 1. MOVE THE BUMP (width fixed at "
           f"{WIDTH:.0e}, only the centre changes) ===")
     for c in CENTRES:
@@ -72,9 +73,20 @@ def experiment_1_move_the_bump():
         truth = 0.5 * WIDTH * math.sqrt(math.pi) * (
             math.erf((1 - c) / WIDTH) + math.erf((c + 1) / WIDTH))
         v, _, w, _ = ask(f, -1.0, 1.0)
+        seen.append(verdict(v, truth, w))
         row(f"centre = {c:.4f}", v, truth, w)
-    print("  -> at this width position alone decides it: same function,")
-    print("     same tolerance, verdict flips on where the mass sits.")
+
+    # Do not assert the conclusion -- read it off the verdicts actually seen.
+    if len(set(seen)) > 1:
+        print("  -> position alone decides it: same function, same tolerance,")
+        print("     verdict flips on nothing but where the mass sits.")
+    elif seen and seen[0] == "SILENT":
+        print("  -> every centre fails at this width. Position no longer")
+        print("     rescues anything: the bump is below what sampling can")
+        print("     find anywhere in the interval. Widen WIDTH to see the flip.")
+    else:
+        print("  -> every centre passes at this width. Narrow WIDTH to find")
+        print("     the edge where position starts to matter.")
 
 
 # ============================================================ EXPERIMENT 2
@@ -85,8 +97,8 @@ def experiment_2_change_the_shape():
     'one integrand shape' as the first limitation. Here are three other
     shapes with known exact integrals. If they behave the same way, that
     limitation is smaller than it looks; if they don't, that is a finding."""
-    W = 1e-6                           # <-- knob: feature width
-    C = 1/3                            # <-- knob: feature location
+    W = 1e-8                           # <-- knob: feature width
+    C = 1/12                            # <-- knob: feature location
 
     print(f"\n=== 2. CHANGE THE SHAPE (width {W:.0e}, centre {C:.4f}) ===")
 
@@ -124,7 +136,7 @@ def experiment_3_widen_the_interval():
     ratio rather than the width, that tells you the mechanism is sampling
     density, not floating-point."""
     WIDTH = 1e-3                       # <-- knob: bump width, held FIXED
-    HALF_WIDTHS = [1, 10, 100, 1000]   # <-- knob: interval is [-H, +H]
+    HALF_WIDTHS = [1, 10, 100, 10000]   # <-- knob: interval is [-H, +H]
     C = 0.0                            # centred, so it stays inside every span
 
     print(f"\n=== 3. WIDEN THE INTERVAL (bump fixed at width {WIDTH:.0e}) ===")
@@ -148,7 +160,7 @@ def experiment_4_break_the_reference():
     were wrong, correct routines would be scored as failures and you would
     never know from the table alone. This is the study's real single point of
     failure, and it is worth feeling."""
-    W, C = 1e-6, 1/3
+    W, C = 1e-6, 1/90
 
     def f(x):
         t = (x - C) / W
