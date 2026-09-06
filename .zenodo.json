@@ -1,0 +1,40 @@
+{
+  "title": "A Shared Blind Spot in Numerical Quadrature",
+  "description": "<p>Differential testing catches the mistakes independent implementations make <em>independently</em>. It cannot catch the mistakes they make <em>together</em>. This study tests that claim in numerical quadrature and finds it holds in the strongest available form.</p><p>Five quadrature routines spanning three independent algorithm families — QUADPACK via SciPy, QUADPACK via R, mpmath's tanh–sinh rule, and two hand-rolled NumPy routines — were asked to integrate a narrow Gaussian bump whose exact value is elementary. On the off-centre probe family at widths of 1e-3 and below, every routine returns a wrong answer and reports success. At the five narrowest widths every returned value is bit-identical: all five return exactly 0.0 for an integral whose exact value is nonzero, and four of the five report an estimated absolute error of exactly 0.0. Maximum pairwise spread across implementations is 0.000e+00, so cross-implementation comparison detects nothing; only the closed-form reference does.</p><p>Tightening tolerances never finds the bump (limit=10000, epsabs=1e-16 still returns exactly zero), so the blindness is not a defect in any implementation but a consequence of deciding convergence by sampling at finitely many points. Supplying the bump location recovers the answer, but that information is what a real application lacks. SciPy's quad and R's integrate() return identical verdicts in all 18 cells because both descend from QUADPACK — independence of authorship is not independence of algorithm.</p><p>The question, probe families, axis and falsification conditions were fixed in SCOPE.md before any measurement was taken. That adaptive quadrature can miss narrow features is textbook and no novelty is claimed for it; the contribution is the differential-testing framing and the measured bit-identical agreement in failure.</p>",
+  "upload_type": "publication",
+  "publication_type": "report",
+  "access_right": "open",
+  "license": "MIT",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Parsons, Noah",
+      "orcid": "0009-0000-7224-6040"
+    }
+  ],
+  "keywords": [
+    "differential testing",
+    "numerical quadrature",
+    "silent failure",
+    "test oracle",
+    "software verification",
+    "empirical software engineering",
+    "floating-point",
+    "QUADPACK",
+    "replication"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.22458147",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-article",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "https://github.com/GuiloScion/shared-blindspot",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    }
+  ],
+  "notes": "Replicates, in a second domain, the central structural claim of the silent-failure study (doi:10.5281/zenodo.22458147). The author of this replication also authors the study whose claim is under test; falsification conditions were fixed in SCOPE.md before measurement and raw per-cell results are published in results.csv rather than summarised. AI assistance was used in this work."
+}

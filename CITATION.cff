@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: A Shared Blind Spot in Numerical Quadrature
+message: >-
+  If you use this work, please cite it using the metadata
+  from this file.
+type: software
+authors:
+  - family-names: Parsons
+    given-names: Noah
+    orcid: 'https://orcid.org/0009-0000-7224-6040'
+repository-code: 'https://github.com/GuiloScion/shared-blindspot'
+abstract: >-
+  Differential testing catches the mistakes independent
+  implementations make independently, and cannot catch the
+  mistakes they make together. Five quadrature routines
+  spanning three independent algorithm families were asked
+  to integrate a narrow Gaussian bump with an elementary
+  exact value. Below a width of 1e-3 all five return a wrong
+  answer and report success; at the five narrowest widths
+  every returned value is bit-identical, exactly 0.0, with
+  four of the five claiming an absolute error of exactly
+  0.0. Cross-implementation comparison detects nothing.
+  Tightening tolerances never finds the bump, so the
+  blindness follows from sampling at finitely many points
+  rather than from any implementation defect. Falsification
+  conditions were fixed before measurement.
+keywords:
+  - differential testing
+  - numerical quadrature
+  - silent failure
+  - software verification
+  - replication
+license: MIT
